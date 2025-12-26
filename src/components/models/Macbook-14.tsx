@@ -15,6 +15,7 @@ import { useEffect, type JSX } from "react";
 import { noChangeParts } from "../../shared/const/const";
 
 type GLTFResult = {
+  scene: THREE.Group;
   nodes: {
     Object_10: THREE.Mesh;
     Object_16: THREE.Mesh;
@@ -63,18 +64,19 @@ export function MackbookModel14(props: JSX.IntrinsicElements["group"]) {
   const { color } = useMackbookState();
   const { nodes, materials, scene } = useGLTF(
     "/models/macbook-14-transformed.glb"
-  ) as GLTFResult;
+  ) as unknown as GLTFResult;
 
-  const texture = useTexture("/screen.png");
-  texture.needsUpdate = true;
-  texture.colorSpace = THREE.SRGBColorSpace;
+  const texture = useTexture("/screen.png", (tex) => {
+    tex.needsUpdate = true;
+    tex.colorSpace = THREE.SRGBColorSpace;
+  });
 
   useEffect(() => {
-    scene.traverse((child: THREE.Mesh) => {
-      if (child.isMesh) {
-        if (!noChangeParts.includes(child.name)) {
-          child.material.color = new THREE.Color(color);
-        }
+    scene.traverse((child) => {
+      if (!(child instanceof THREE.Mesh)) return;
+
+      if (!noChangeParts.includes(child.name)) {
+        (child.material as THREE.MeshStandardMaterial).color.set(color);
       }
     });
   }, [color, scene]);

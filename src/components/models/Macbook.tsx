@@ -10,6 +10,7 @@ Title: macbook pro M3 16 inch 2024
 
 import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
+import type { JSX } from "react";
 
 type GLTFResult = {
   nodes: {
@@ -59,7 +60,7 @@ type GLTFResult = {
 export function MackbookModel(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF(
     "/models/macbook-transformed.glb"
-  ) as GLTFResult;
+  ) as unknown as GLTFResult;
   return (
     <group {...props} dispose={null}>
       <mesh
