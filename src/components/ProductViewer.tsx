@@ -1,12 +1,14 @@
 import clsx from "clsx";
 import { useMackbookState } from "../store";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import { MackbookModel14 } from "./models/Macbook-14";
-import { StudioLights } from "./StudioLights";
+import { StudioLights } from "./three/StudioLights";
+import { ModelSwitcher } from "./three/ModelSwitcher";
+import { useMediaQuery } from "react-responsive";
 
 const ProductViewer = () => {
   const { color, scale, setColor, setScale } = useMackbookState();
+
+  const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
 
   return (
     <section id="product-viewer">
@@ -14,7 +16,7 @@ const ProductViewer = () => {
 
       <div className="controls">
         <p className="info">
-          Macbook Pro {scale} in {color}
+          Macbook Pro | Available 14" and 16" in Space Gray and Dark colors
         </p>
 
         <div className="flex-center gap-5 mt-5">
@@ -73,9 +75,11 @@ const ProductViewer = () => {
       >
         <StudioLights />
 
-        <MackbookModel14 position={[0, 0, 0]} scale={0.06} />
-
-        <OrbitControls enableZoom={false} />
+        {/* <OrbitControls enableZoom={false} /> */}
+        <ModelSwitcher
+          scale={isMobile ? scale - 0.03 : scale}
+          isMobile={isMobile}
+        />
 
         {/* <DebugSpotLight /> */}
       </Canvas>
