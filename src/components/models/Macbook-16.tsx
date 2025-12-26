@@ -64,7 +64,7 @@ export function MackbookModel16(props: JSX.IntrinsicElements["group"]) {
   const { color } = useMackbookState();
 
   const { nodes, materials, scene } = useGLTF(
-    "/models/macbook-14-transformed.glb"
+    "/models/macbook-16-transformed.glb"
   ) as unknown as GLTFResult;
 
   const texture = useTexture("/screen.png", (tex) => {
