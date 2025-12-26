@@ -76,6 +76,8 @@ const ProductViewer = () => {
         <MackbookModel14 position={[0, 0, 0]} scale={0.06} />
 
         <OrbitControls enableZoom={false} />
+
+        {/* <DebugSpotLight /> */}
       </Canvas>
     </section>
   );
